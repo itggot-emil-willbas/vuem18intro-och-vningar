@@ -9,16 +9,32 @@
     <title>Average Number</title>
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <emil-slider v-for="name in sliderNames"
+                    v-bind:slidername="name"
+                    v-bind:key="name.id">
+        </emil-slider>
+        
+        <p></p>
+
+    </div>
 
     <script>
+
+            Vue.component('emil-slider',{
+                template:`<input type="range" v-bind:id="slidername.text">`,
+                props:['slidername']
+
+            })
 
             let app = new Vue({
                 el: '#app',
                 data: {
-                    value: '0',
-                    value2: '0',
-                    tabell: ''
+                    sliderNames:[
+                        {id:0,text:'one'},{id:1,text:'two'},{id:2,text:'three'}
+                    ],
+                    qname:'Emil'
+                   
                 },
                 methods: {
                     double: function () {
