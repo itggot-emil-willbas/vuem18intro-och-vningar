@@ -24,7 +24,6 @@
             Vue.component('emil-slider',{
                 template:`<input type="range" v-bind:id="slidername.text">`,
                 props:['slidername']
-
             })
 
             let app = new Vue({
@@ -34,14 +33,12 @@
                         {id:0,text:'one'},{id:1,text:'two'},{id:2,text:'three'}
                     ],
                     qname:'Emil'
-                   
                 },
                 methods: {
                     double: function () {
                         this.value2 = this.value * this.tabell
                     }
                 }
-    
             })
         </script>
 </body>
