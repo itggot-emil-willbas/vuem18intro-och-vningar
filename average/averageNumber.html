@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css"> -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <title>Average Number</title>
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="container">
         <emil-slider v-for="name in sliderNames"
                     v-bind:slidername="name"
                     v-bind:key="name.id"
-                    v-bind:magicSum="magicsum"
                     v-bind:avarage="avarage"
                     >
         </emil-slider>
@@ -32,11 +32,17 @@
                 template:`
                 <div>
                 <label v-bind:for="slidername.text">{{slidername.text}}:</label>
-                <input  value="0" v-on:change="avarage" type="range" v-bind:id="slidername.text"><span></span>
+                <input 
+                    class="input-slider" 
+                    value="0"
+                    v-on:change="avarage" 
+                    type="range" 
+                    v-bind:id="slidername.text">
+                <span></span>
                 
                 </div>
                 `,
-                props:['slidername','avarage','magicsum']
+                props:['slidername','avarage']
             })
 
             let app = new Vue({
@@ -53,7 +59,7 @@
                 methods: {
                     avarage: function () {
                         this.started = true;
-                        inputs = document.querySelectorAll('input');
+                        inputs = document.querySelectorAll('.input-slider');
                         this.antalinputs = inputs.length
                         this.magicsum = 0;
                         inputs.forEach(element => {
