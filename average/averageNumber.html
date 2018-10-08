@@ -12,31 +12,63 @@
     <div id="app">
         <emil-slider v-for="name in sliderNames"
                     v-bind:slidername="name"
-                    v-bind:key="name.id">
+                    v-bind:key="name.id"
+                    v-bind:magicSum="magicsum"
+                    v-bind:avarage="avarage"
+                    >
         </emil-slider>
+        <p v-if="started">Avarage:{{parseInt(magicsum/antalinputs)}}</p>
         
-        <p></p>
+        <form v-on:submit.prevent="addslider" action="">
+            <input type="text" name="inputtext" id="inputtext">
+            <input type="submit" value="+">
+        </form>
 
     </div>
 
     <script>
 
             Vue.component('emil-slider',{
-                template:`<input type="range" v-bind:id="slidername.text">`,
-                props:['slidername']
+                template:`
+                <div>
+                <label v-bind:for="slidername.text">{{slidername.text}}:</label>
+                <input  value="0" v-on:change="avarage" type="range" v-bind:id="slidername.text"><span></span>
+                
+                </div>
+                `,
+                props:['slidername','avarage','magicsum']
             })
 
             let app = new Vue({
                 el: '#app',
                 data: {
                     sliderNames:[
-                        {id:0,text:'one'},{id:1,text:'two'},{id:2,text:'three'}
+                        {id:0,text:'one'},{id:1,text:'two'},{id:2,text:'thre'}
                     ],
-                    qname:'Emil'
+                    qname:'Emil',
+                    magicsum:0,
+                    antalinputs:0,
+                    started:false
                 },
                 methods: {
-                    double: function () {
-                        this.value2 = this.value * this.tabell
+                    avarage: function () {
+                        this.started = true;
+                        inputs = document.querySelectorAll('input');
+                        this.antalinputs = inputs.length
+                        this.magicsum = 0;
+                        inputs.forEach(element => {
+                            console.log(element.nextElementSibling)
+                            element.nextElementSibling.innerText = element.value;
+                            this.magicsum += Number(element.value)
+                        });
+                    },
+                    addslider: function () {
+                        inputtext = document.querySelector('#inputtext').value;
+                        console.log(inputtext.value);
+                        newId = document.querySelectorAll('input').length + 1;
+                        console.log('NewId = ' + newId)
+                        let newObject = {id:newId, text:inputtext};
+                        this.sliderNames.push(newObject); 
                     }
                 }
             })
