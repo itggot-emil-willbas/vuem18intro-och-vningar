@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{geekFacts}}</p>
+        <ul>
+            <li v-for="film in results">{{ film.title }}</li>
+        </ul>
+    </div>
+    <script>
+            let app = new Vue({
+            el: '#app',
+            data: {
+                geekFacts:'Loading...',
+                results:[],
+                status:'Ok'
+            },
+            created: function () {
+                this.loadStarWars();           
+            },
+            methods: {
+                loadStarWars: function () {
+                    this.status = 'Loading...';
+                    console.log(axios.get('https://swapi.co/api/films/'))
+                    axios.get('https://swapi.co/api/films')
+                    .then(function (response) {
+                        app.geekFacts = response.data.results[0].opening_crawl;
+                        app.results = response.data.results;
+                    })  
+                    .catch(function(error){
+                        app.status = 'Error mannen!'
+                    })
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>
